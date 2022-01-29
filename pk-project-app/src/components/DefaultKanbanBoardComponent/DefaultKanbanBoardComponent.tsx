@@ -12,6 +12,9 @@ import { setCard } from "../../state/cardInfo/action";
 import CardDetailsModal from "../CardDetailsModalComponent/CardDetailsModal";
 import CardCommentsModal from "../CardCommentsModal/CardCommentsModal";
 import RemoveColumnModalComponent from "../RemoveColumnModalComponent/RemoveColumnModalComponent";
+import { Team } from "../CreateScrumTableComponent/constants";
+import { User } from "../TeamsWithUsersComponent/constants";
+import { getTeamById, getUsersByTeamId } from "../../api/teams";
 
 const DefaultKanbanBoardComponent = () =>{
     const kanbanBoard = useSelector<IState, IBoard>((state) => state.board);
@@ -19,6 +22,8 @@ const DefaultKanbanBoardComponent = () =>{
     const dispatch = useDispatch();
     const [columns1, setColumns1] = useState<Columns[]>();
     const [columnsWithCards, setColumnsWithCards] = useState<Columns[]>();
+    const [team, setTeam] = useState<Team>();
+    const [teamUsers, setTeamUsers] = useState<User[]>();
     const [showDetails, setShowDetails] = useState(false);
     const [showComments, setShowComments] = useState(false);
     const [close, setClose] = useState(false);
@@ -62,7 +67,13 @@ const DefaultKanbanBoardComponent = () =>{
                 cards: response
             }
         }));
-        setColumnsWithCards(values);    
+        setColumnsWithCards(values); 
+        
+        const getTeam = await getTeamById(kanbanBoard.teamId);
+        setTeam(getTeam);
+
+        const getUsers = await getUsersByTeamId(kanbanBoard.teamId);
+        setTeamUsers(getUsers);
     }
 
     const dragStartHandler = async (event: React.DragEvent<HTMLElement>, cId:any, oldCId:any) => {
@@ -183,7 +194,16 @@ const DefaultKanbanBoardComponent = () =>{
                                 <p></p>
                             )}
                         </Col>
-                    )}         
+                    )}
+                    <Col sm={2}>
+                       Zespół {team?.name}: <br />
+                       {teamUsers?.map((user, index) => 
+                            <>
+                                <span key={index}>{user.firstname} {user.lastname}</span> <br/>
+                            </>
+                       )}
+
+                    </Col>         
                 </Row>
 
                 <RemoveColumnModalComponent

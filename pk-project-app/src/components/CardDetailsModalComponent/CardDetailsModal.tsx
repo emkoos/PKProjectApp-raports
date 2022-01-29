@@ -4,7 +4,7 @@ import { Button, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { editCard } from "../../api/cards";
 import { getStatus, getStatuses } from "../../api/statuses";
-import { ICard, IState, IUser } from "../../state";
+import { ICard, IState, IBoard } from "../../state";
 import { Comment, Status } from "./constants";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,16 +13,26 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { DateTimePicker } from "@mui/lab";
 import { TextField } from "@mui/material";
 import { getCommentByCardId } from "../../api/comments";
+import { User } from "../TeamsWithUsersComponent/constants";
+import { getUsersByTeamId } from "../../api/teams";
 
 const CardDetailsModal = () => {
     const [statuses, setStatuses] = useState<Status[] | undefined>();
+    const [users, setUsers] = useState<User[] | undefined>();
     const [date, setDate] = useState<Date | null | undefined>();
     const [comments, setComments] = useState<Comment[] | undefined>();
     const selectedCard = useSelector<IState, ICard>((state) => state.card);
+    const cardBoard = useSelector<IState, IBoard>((state) => state.board);
 
     useEffect(() => {
       getStatuses().then((response) => {
         setStatuses(response)
+      }).catch(err => console.log(err))
+    }, [])
+
+    useEffect(() => {
+      getUsersByTeamId(cardBoard.teamId).then((response) => {
+        setUsers(response)
       }).catch(err => console.log(err))
     }, [])
 
@@ -75,16 +85,14 @@ const CardDetailsModal = () => {
             onChange={handleChange}
           />
         </Form.Group>
-  
+
         <Form.Group>
           <Form.Label>Przypisany użytkownik</Form.Label>
-          <Form.Control
-            type="text"
-            name="userEmail"
-            placeholder={selectedCard.userEmail}
-            defaultValue={selectedCard.userEmail}
-            onChange={handleChange}
-          />
+          <Form.Select name="userEmail" className="select-input" value={values.userEmail} onChange={handleChange}>
+            {users?.map((user, index) =>
+              <option key={index} value={user.email}>{user.firstname} {user.lastname}</option>
+            )}
+          </Form.Select>
         </Form.Group>
 
         <Form.Group>
