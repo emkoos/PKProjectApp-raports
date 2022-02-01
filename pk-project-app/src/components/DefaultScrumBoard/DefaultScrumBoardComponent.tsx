@@ -189,15 +189,11 @@ const DefaultScrumBoardComponent = () =>{
                             </Card.Body>
                         </Card>
                             )}
-                            {index == 0 ? (
-                                <Button className="hidden-button">
+                            
+                                <Button className="button-delete-col" variant="danger" onClick={() => deleteColumnButtonClicked(column.id)}>
                                     Usuń kolumnę
                                 </Button> 
-                            ) : (
-                                <Button variant="danger" onClick={() => deleteColumnButtonClicked(column.id)}>
-                                    Usuń kolumnę
-                                </Button> 
-                            )}
+                            
                         </Col>
                     )}       
                 </Row>

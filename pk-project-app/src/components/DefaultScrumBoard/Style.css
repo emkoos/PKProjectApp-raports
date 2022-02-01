@@ -1,4 +1,5 @@
 .table-column{
+    position: relative !important;
     color: white !important;
     min-height: 600px;
 }
@@ -6,6 +7,7 @@
     width: '18rem';
     color: black;
 }
-.hidden-button{
-    display: none !important;
+.button-delete-col{
+    position: absolute !important;
+    bottom: 0 !important;
 }
