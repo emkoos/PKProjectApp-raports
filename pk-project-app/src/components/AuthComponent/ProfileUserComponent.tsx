@@ -49,7 +49,6 @@ const ProfileUserComponent = () => {
         </Form.Group>
 
         <FileUploader />
-
         <br/>
         <Button variant="primary" type="submit">
           Zapisz zmiany
