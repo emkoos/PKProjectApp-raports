@@ -7,6 +7,7 @@ import { IToken, IUser } from "../../state";
 import { setToken } from "../../state/userToken/action";
 import { setUserInfo } from "../../state/userInfo/action";
 import { setLoggedIn } from "../../state/loggedIn/action";
+import HandleDownload from "../FileUploadComponent/HandleDownloadComponent";
 
 const LoginComponent = () => {
     const iToken = useSelector<IToken>((state) => state.token);
@@ -64,18 +65,18 @@ const LoginComponent = () => {
                         {// @ts-ignore
                             iToken.token !== "" && <Container className="d-flex justify-content-center align-items-center">
                                 <Nav.Link href="/raports">Raporty</Nav.Link>
-                                <img width="40" height="40" className="rounded mx-auto d-block" src={"data:image/jpeg;base64," + userInfo.photo} />
-                                {/* <img width="40" height="40" className="rounded mx-auto d-block" src={// @ts-ignore
-                                    userInfo.photo ? userInfo.photo : "https://kis.agh.edu.pl/wp-content/uploads/2021/01/default-avatar.jpg"} 
+                                {<img width="40" height="40" className="rounded mx-auto d-block" src={// @ts-ignore
+                                    userInfo.photo ? "data:image/jpeg;base64," + userInfo.photo : "https://kis.agh.edu.pl/wp-content/uploads/2021/01/default-avatar.jpg"} 
                                     alt="avatar"
-                                 /> */}
+                                 /> }
                                 <span className="d-block m-2">
                                     {userInfo.firstname} {userInfo.lastname}</span>
                                 <Button onClick={logOut}>Wyloguj się</Button>
                                 <Link to='/profile'>
                                     <Button type="submit">Profil</Button>
-                                </Link>
+                                </Link>                        
                             </Container>
+
                         }
                     </Navbar.Text>
                     </Navbar.Collapse>
