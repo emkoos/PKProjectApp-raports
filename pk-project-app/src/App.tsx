@@ -22,6 +22,7 @@ import RaportsComponent from './components/RaportsComponent/RaportsComponent';
 import LoginComponent from './components/AuthComponent/LoginComponent';
 import DefaultOwnBoardComponent from './components/DefaultOwnBoardComponent/DefaultOwnBoardComponent';
 import CreateOwnTableComponent from './components/CreateOwnTableComponent/CreateOwnTableComponent';
+import FileUploader from './components/FileUploadComponent/FileUploadComponent';
 
 function App() {
 
@@ -53,8 +54,9 @@ function App() {
         <Route path="/register" element={<RegisterUserComponent/>}/>
         <Route path="/profile" element={<ProfileUserComponent/>}/>
 
-        <Route path="/raports" element={<RaportsComponent/>}/>
-
+        <Route path="/raports" element={<RaportsComponent/>}/> 
+        <Route path="/file" element={<FileUploader/>}/>
+        
         </Routes>
       </BrowserRouter>
     </div>

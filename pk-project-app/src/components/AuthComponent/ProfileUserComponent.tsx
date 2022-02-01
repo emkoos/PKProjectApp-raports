@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import {  IState, IUser } from "../../state";
 import { editUserInfo } from "../../api/auth";
 import { Navigate, useNavigate } from "react-router";
+import FileUploader from "../FileUploadComponent/FileUploadComponent";
 
 const ProfileUserComponent = () => {
     const navigate = useNavigate();
@@ -46,6 +47,8 @@ const ProfileUserComponent = () => {
         <Form.Group>
           <Form.Label>Email: {userInfo.email}</Form.Label>
         </Form.Group>
+
+        <FileUploader />
 
         <br/>
         <Button variant="primary" type="submit">

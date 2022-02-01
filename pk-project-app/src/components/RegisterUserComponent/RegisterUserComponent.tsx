@@ -15,6 +15,7 @@ import { getCommentByCardId } from "../../api/comments";
 import { Team } from "../CreateScrumTableComponent/constants";
 import { registerUser } from "../../api/auth";
 import { useNavigate } from "react-router";
+import FileUploader from "../FileUploadComponent/FileUploadComponent";
 
 const RegisterUserComponent = () => {
     const navigate = useNavigate();

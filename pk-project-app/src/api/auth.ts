@@ -32,3 +32,11 @@ export const editUserInfo = (email: string, username: string, firstname: string,
     }
     return instance.put("Users/edit-profile", params, config);
 }
+
+export const uploadUserPhoto = (file: any) => {
+    const params = { file };
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+   }
+    return instance.post("Users/upload-photo", params, config).then((response) => response.data);
+}
