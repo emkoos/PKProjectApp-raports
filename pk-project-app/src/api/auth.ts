@@ -40,3 +40,10 @@ export const uploadUserPhoto = (file: any) => {
    }
     return instance.post("Users/upload-photo", params, config).then((response) => response.data);
 }
+
+export const GetUserPhoto = (email: string) => {
+    const config = {
+         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    }
+    return instance.get(`Users/download-photo/${email}`, config).then((response) => response.data?.photo);
+}

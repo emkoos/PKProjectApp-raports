@@ -1,19 +1,12 @@
 import axios from "axios";
-import { Formik } from "formik";
-import { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-import { uploadUserPhoto } from "../../api/auth";
-import { createBoard } from "../../api/boards";
-import { createColumn } from "../../api/columns";
-import { getUserTeams } from "../../api/teams";
-import { ILoggedIn, IState, IToken } from "../../state";
-import { setBoard } from "../../state/boardColumns/action";
-import { Team } from "../CreateScrumTableComponent/constants";
+import { useState } from "react";
+import { Container } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { infoUser } from "../../api/auth";
+import { setUserInfo } from "../../state/userInfo/action";
 
 const FileUploader = () => {
-    const [fileSelected, setFileSelected] = useState<string | Blob>() // also tried <string | Blob>
+    const dispatch = useDispatch();
     const [file, setFile] = useState("");
     const [fileName, setFileName] = useState("");
 
@@ -31,6 +24,11 @@ const FileUploader = () => {
                 const config = {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }}
                 const res = await axios.post("https://localhost:44390/Users/upload-photo", formData, config);
+
+                infoUser().then(async response => {
+                    await dispatch(setUserInfo(response));
+                    localStorage.setItem("userInfo", JSON.stringify(response))
+                });
               } catch (ex) {
                 console.log(ex);
               }
