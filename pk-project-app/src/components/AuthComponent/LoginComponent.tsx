@@ -7,8 +7,6 @@ import { IToken, IUser } from "../../state";
 import { setToken } from "../../state/userToken/action";
 import { setUserInfo } from "../../state/userInfo/action";
 import { setLoggedIn } from "../../state/loggedIn/action";
-import Image from 'react-bootstrap/Image';
-import { GetUserPhoto, infoUser } from "../../api/auth";
 
 const LoginComponent = () => {
     const iToken = useSelector<IToken>((state) => state.token);

@@ -6,3 +6,6 @@
     width: '18rem';
     color: black;
 }
+.hidden-button{
+    display: none !important;
+}

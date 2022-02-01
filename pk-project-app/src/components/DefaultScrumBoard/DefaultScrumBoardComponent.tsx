@@ -18,6 +18,7 @@ import { setColumns } from "../../state/columnCards/action";
 import { getTeamById, getUsersByTeamId } from "../../api/teams";
 import { Team } from "../CreateScrumTableComponent/constants";
 import { User } from "../TeamsWithUsersComponent/constants";
+import { truncate } from "fs";
 
 const DefaultScrumBoardComponent = () =>{
     const scrumBoard = useSelector<IState, IBoard>((state) => state.board);
@@ -188,24 +189,17 @@ const DefaultScrumBoardComponent = () =>{
                             </Card.Body>
                         </Card>
                             )}
-                            {index > 0 ? (
-                                <Button variant="danger" onClick={() => deleteColumnButtonClicked(column.id)}>
+                            {index == 0 ? (
+                                <Button className="hidden-button">
                                     Usuń kolumnę
                                 </Button> 
                             ) : (
-                                <p></p>
+                                <Button variant="danger" onClick={() => deleteColumnButtonClicked(column.id)}>
+                                    Usuń kolumnę
+                                </Button> 
                             )}
                         </Col>
-                    )}  
-                    <Col sm={2}>
-                       Zespół {team?.name}: <br />
-                       {teamUsers?.map((user, index) => 
-                            <>
-                                <span key={index}>{user.firstname} {user.lastname}</span> <br/>
-                            </>
-                       )}
-
-                    </Col>       
+                    )}       
                 </Row>
 
                 <RemoveColumnModalComponent
