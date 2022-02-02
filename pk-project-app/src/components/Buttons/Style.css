@@ -1,0 +1,12 @@
+.board-button{
+    display:inline-block !important;
+    background-color:#0dcaf0 !important;
+    border: none !important;
+    color: black !important;
+    margin-top: 10px !important;
+}
+
+.board-button:hover{
+    background-color:#298296 !important;
+    color: white !important;
+}

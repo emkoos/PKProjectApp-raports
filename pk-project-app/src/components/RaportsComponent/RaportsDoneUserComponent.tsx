@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import "./Style.css";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -64,14 +65,14 @@ const RaportsDoneUserComponent = (props: any) => {
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: 'rgba(' + props.rgbGenerate() + ', 0.5)',
             }];
-            datasets = Promise.resolve([
-                ...datasets,
-                {
-                    label: 'InProgress',
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    backgroundColor: 'rgba(' + props.rgbGenerate() + ', 0.5)',
-                }
-            ]);
+            // datasets = Promise.resolve([
+            //     ...datasets,
+            //     {
+            //         label: 'InProgress',
+            //         data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            //         backgroundColor: 'rgba(' + props.rgbGenerate() + ', 0.5)',
+            //     }
+            // ]);
         }
 
         let columns = await getColumnByBoardId(e.target.value);
@@ -150,10 +151,14 @@ const RaportsDoneUserComponent = (props: any) => {
     }
 
     return <>
-        <Row><Col><h1>Ilość "zDone'owanych" kart zalogowanego użytkownika</h1></Col></Row>
+        <Row className="mt-5">
+            <Col>
+                <h3>Twoja ukończona liczba zadań:</h3>
+            </Col>
+        </Row>
         <Row className="mt-3">
             <Col>
-                <Form.Select aria-label="Select Teams" onChange={onChangeSelect} value={selectValue}>
+                <Form.Select className="w-50 raport-input" aria-label="Select Teams" onChange={onChangeSelect} value={selectValue}>
                     <option value="0" disabled>Wybierz Tablice</option>
                     {myBoards.map((boards: any, index: number) => <option key={index} value={boards.id}>{boards.name}</option>)}
                 </Form.Select>

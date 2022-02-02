@@ -1,0 +1,32 @@
+.team-input{
+    margin-left: 25% !important;
+}
+.new-team{
+    text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+    .team-section{
+        margin-top: 30px;
+    }
+  }
+
+.icon-button{
+    background-color: white !important;
+    color: black !important;
+    border: none !important;
+}
+
+.icon-button:hover{
+    background-color: white !important;
+    color: black !important;
+    border: none !important;
+}
+.team-name{
+    font-weight: 600;
+    font-size: large;
+}
+
+.team-line{
+    margin-left: 25% !important;
+}

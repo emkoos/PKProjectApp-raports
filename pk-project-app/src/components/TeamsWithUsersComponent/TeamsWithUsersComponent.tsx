@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import "./Style.css";
 import { createTeam, getUsersByTeamId, getUserTeams } from "../../api/teams";
 import { IState, IUser } from "../../state";
 import AddUserToTeamModalComponent from "./AddUserToTeamModalComponent";
 import { InitialTeam, Team } from "./constants";
 import RemoveTeamModalComponent from "./RemoveTeamModalComponent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationCircle, faTrashAlt, faUserFriends, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const TeamsWithUsersComponent = () => {
     const userInfo = useSelector<IState, IUser>((state) => state.userInfo);
@@ -71,41 +74,16 @@ const TeamsWithUsersComponent = () => {
 
     return (
         <>
-            <section>
-                <Formik
-                        onSubmit={submitHandler}
-                        initialValues={initialValues}
-                        enableReinitialize
-                    >
-                        {({handleSubmit, handleChange, handleBlur, values, touched, errors}) => (
-                            <Form onSubmit={handleSubmit}>
-                                <Form.Group>
-                                    <Form.Label className="text-start px-0">Nazwa zespołu</Form.Label>
-                                    <Form.Control type="text" name="name" className="w-50 text-center px-0 ps-5" onChange={handleChange} />
-                                </Form.Group>
-                                {error ? (
-                                    <Alert variant="danger">{error}</Alert>
-                                ) : (
-                                <p></p>
-                                )}
-                                <Row>
-                                    <Col className="my-3 d-flex justify-content-center justify-content-md-center align-items-stretch px-0">
-                                        <Button type="submit">Utwórz zespół +</Button>
-                                    </Col>
-                                </Row>
-                            </Form>
-                        )}
-                    </Formik>
-
+            <section className="team-section">
                         <h2>Twoje zespoły:</h2>
                         {teamsWithUsers?.map((team, index) =>
                             <div key={index}>
-                                <b>{team.name}</b>
-                                <Button variant="info" onClick={() => addUserToTeam(team.id, team.name)}>
-                                    Dodaj użytkownika
+                                <Button className="icon-button" title="Dodaj członka" onClick={() => addUserToTeam(team.id, team.name)}>
+                                    <FontAwesomeIcon icon={faUserPlus} size="2x" />
                                 </Button> 
-                                <Button variant="danger" onClick={() => removeTeam(team.id, team.name)}>
-                                    Usuń zespół
+                                <span className="team-name">{team.name}</span>
+                                <Button className="icon-button" title="Usuń zespół" onClick={() => removeTeam(team.id, team.name)}>
+                                    <FontAwesomeIcon icon={faTrashAlt} size="2x" />
                                 </Button> 
                                 <br/>
                                 {team.users?.map((user, key) =>
@@ -114,13 +92,38 @@ const TeamsWithUsersComponent = () => {
                                         user.email == userInfo.email ? (
                                             <span>Ty</span>
                                         ) : (
-                                            <span>{user.email}</span>
+                                            <span>{user.firstname} {user.lastname}</span>
                                         )      
                                     }
                             </div>
                                 )}
                             </div>
-                        )}         
+                        )}    
+                        <hr className="w-50 team-line"/> 
+                        <Formik
+                        onSubmit={submitHandler}
+                        initialValues={initialValues}
+                        enableReinitialize
+                    >
+                        {({handleSubmit, handleChange, handleBlur, values, touched, errors}) => (
+                            <Form onSubmit={handleSubmit}>
+                                <Form.Group className="new-team">
+                                    <Form.Label className="text-start px-0 mt-3">Wpisz nazwę zespołu:</Form.Label>
+                                    <Form.Control type="text" name="name" className="w-50 text-center px-0 team-input" onChange={handleChange} />
+                                </Form.Group>
+                                {error ? (
+                                    <Alert variant="danger">{error}</Alert>
+                                ) : (
+                                <p></p>
+                                )}
+                                <Row>
+                                    <Col className="my-3 d-flex justify-content-center justify-content-md-center align-items-stretch px-0">
+                                        <Button type="submit">Utwórz zespół <FontAwesomeIcon icon={faUserFriends} size="1x" /></Button>
+                                    </Col>
+                                </Row>
+                            </Form>
+                        )}
+                    </Formik>   
             </section>
 
             <AddUserToTeamModalComponent

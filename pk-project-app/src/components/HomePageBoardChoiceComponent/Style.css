@@ -1,3 +1,43 @@
 .container-style{
     float: left !important;
 }
+.board-type-button{
+    margin-top:10px;
+    width: 160px;
+    height: 80px;
+    font-size: x-large;
+    background-color: #0A66C2;
+    color:white;
+    border: 0;
+    border-radius: 100px;
+    justify-content: center;
+    padding-bottom: 5px;
+}
+
+.board-type-button:hover,
+.board-type-button:focus { 
+    background-color: #16437E;
+    color: #ffffff;
+  }
+  
+.board-type-button:active {
+    background: #09223b;
+    color: rgb(255, 255, 255, .7);
+  }
+  
+.board-type-button:disabled { 
+    cursor: not-allowed;
+    background: rgba(0, 0, 0, .08);
+    color: rgba(0, 0, 0, .3);
+  }
+
+  .board-element{
+      width: auto !important;
+  }
+
+@media only screen and (max-width: 800px) {
+    .board-list{
+        padding-left: 5px;
+        padding-top: 10px;
+    }
+  }

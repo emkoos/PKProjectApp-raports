@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setBoard } from "../../state/boardColumns/action";
+import "./Style.css";
 import { setColumns } from "../../state/columnCards/action";
 import { IBoardButtonProps } from "./constants";
 
@@ -15,9 +16,8 @@ const SelectBoardButton= (props: IBoardButtonProps) => {
 
     return (
         <Link to={{pathname: props.route + `-${props.selectedBoard.boardTypeId}`}}>
-            <Button onClick={setSelectedBoard} variant="primary">{props.selectedBoard.name}</Button>
+            <Button className="board-button" onClick={setSelectedBoard} variant="primary">{props.selectedBoard.name}</Button>
         </Link>
-        
     )
 }
 
