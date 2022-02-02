@@ -11,6 +11,7 @@ import LoginComponent from "../AuthComponent/LoginComponent";
 import TeamsWithUsersComponent from "../TeamsWithUsersComponent/TeamsWithUsersComponent";
 import { ILoggedIn, IState, IToken } from "../../state";
 import { useSelector } from "react-redux";
+import RaportsDoneUserComponent from "../RaportsComponent/RaportsDoneUserComponent";
 
 const HomePageBoardChoiceComponent = () =>{
     const userToken = useSelector<IState, IToken>((state) => state.token);
@@ -31,36 +32,102 @@ const HomePageBoardChoiceComponent = () =>{
         setBoards(boardsResponse);
     }
 
+    const generateRandomNumber = (min: number, max: number) => {
+        return Math.floor(Math.random() * (max - min) + min);
+    };
+
+    const rgbGenerate = () => {
+        let r = generateRandomNumber(0, 255);
+        let g = generateRandomNumber(0, 255);
+        let b = generateRandomNumber(0, 255);
+
+        return r + ',' + g + ',' + b;
+    }
+
+    const formatDate = (date: any, isHours = false) => {
+        let dateStr = '';
+
+        if (isHours) {
+            dateStr =
+                date.getFullYear() + "-" +
+                ("00" + date.getDate()).slice(-2) + "-" +
+                ("00" + (date.getMonth() + 1)).slice(-2) + " " +
+                ("00" + date.getHours()).slice(-2) + ":" +
+                ("00" + date.getMinutes()).slice(-2) + ":" +
+                ("00" + date.getSeconds()).slice(-2);
+        }
+        else {
+            dateStr =
+                date.getFullYear() + "-" +
+                ("00" + date.getDate()).slice(-2) + "-" +
+                ("00" + (date.getMonth() + 1)).slice(-2);
+        }
+
+        return dateStr;
+    }
+
+    const dateRange = (isHours = false) => {
+        const dateArray = [];
+
+        for (let i = 13; i >= 0; i--) {
+            let currentDate = new Date();
+            currentDate.setDate(currentDate.getDate() - i);
+            dateArray.push(formatDate(new Date(currentDate), isHours));
+        }
+        return dateArray;
+    }
+
+    const labels = dateRange();
+
     return (
         <>
                 <Row>
                 <Col sm={8}>
                     <Row>
-                        <h3>Wybierz na jakiej tablicy chcesz działać</h3>
+                        <h3>Utwórz nową tablicę:</h3>
                     </Row>
-                    <Row>
+                    <Row className="mt-3">
                         {boardTypes?.map((boardType, index) =>
+                        <>
+                        <Col>
                             <Link to={`/new-${boardType.name}`}>
-                                <Button key={index} type="submit">{boardType.name}</Button>
+                                <button className="board-type-button" key={index} type="submit">{boardType.name == "Own" ? (
+                                        <>Własna</>
+                                    ) : (
+                                        <>{boardType.name}</>
+                                    )}
+                                </button>
                             </Link>
+                            <div className="clear"></div>
+                        </Col>
+                        </>
                         )}
                         
                     </Row>
 
                     {userToken.token != "" ? (
                         <>
-                            <Row>
+                            <Row className="mt-5">
                             <h3>Twoje tablice:</h3>
                             </Row>
-                            <Row>
-                                {boards?.map((board, index) =>     
-                                    <span className="mt-4 mt-md-0 me-5"><SelectBoardButton route={`/table`} selectedBoard={board} /></span>
+                            <Row className="board-list">
+                                
+                                {boards?.map((board, index) =>    
+                                    <div className="board-element">
+                                    <SelectBoardButton route={`/table`} selectedBoard={board} />
+                                    </div>
                                 )}           
                             </Row>
-                        </>
-                    ) : (
-                        <p></p>
-                    )}
+                            <Row>
+                                <Col>
+                                    <RaportsDoneUserComponent labels={labels} rgbGenerate={rgbGenerate} formatDate={formatDate} />
+                                </Col>
+                            </Row>
+                                    </>
+                                ) : (
+                                    <p></p>
+                                )}
+                    
                 </Col>
                 <Col sm={4}>
                     {userToken.token != "" ? (
