@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { Button, Container, Form, Modal, Row, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addUserToTeam } from "../../api/auth";
+import "../AuthComponent/Style.css";
 import { deleteColumn } from "../../api/columns";
 
 const AddUserToTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}: any) => {
@@ -89,9 +90,9 @@ const AddUserToTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}
                                 <Button variant="light" onClick={props.onHide}>
                                     Anuluj
                                 </Button>
-                                <Button variant="primary" onClick={onClickAdd}>
+                                <button className="nav-button" onClick={onClickAdd}>
                                     Dodaj użytkownika
-                                </Button>
+                                </button>
                              </>
                          )
                      )}

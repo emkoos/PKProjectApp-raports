@@ -11,7 +11,7 @@ import AddUserToTeamModalComponent from "./AddUserToTeamModalComponent";
 import { InitialTeam, Team } from "./constants";
 import RemoveTeamModalComponent from "./RemoveTeamModalComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationCircle, faTrashAlt, faUserFriends, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationCircle, faSignal, faTrashAlt, faUserFriends, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const TeamsWithUsersComponent = () => {
     const userInfo = useSelector<IState, IUser>((state) => state.userInfo);
@@ -109,7 +109,7 @@ const TeamsWithUsersComponent = () => {
                         {({handleSubmit, handleChange, handleBlur, values, touched, errors}) => (
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group className="new-team">
-                                    <Form.Label className="text-start px-0 mt-3">Wpisz nazwę zespołu:</Form.Label>
+                                    <Form.Label className="text-start px-0 mt-3">Wpisz nazwę nowego zespołu:</Form.Label>
                                     <Form.Control type="text" name="name" className="w-50 text-center px-0 team-input" onChange={handleChange} />
                                 </Form.Group>
                                 {error ? (
@@ -120,6 +120,13 @@ const TeamsWithUsersComponent = () => {
                                 <Row>
                                     <Col className="my-3 d-flex justify-content-center justify-content-md-center align-items-stretch px-0">
                                         <button className="nav-button" type="submit">Utwórz zespół <FontAwesomeIcon className="ms-2" icon={faUserFriends} size="1x" /></button>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col className="my-3 d-flex justify-content-center justify-content-md-center align-items-stretch px-0">
+                                    <Link to={`/raports`}>
+                                        <button className="nav-button" type="submit">Zobacz statystyki <FontAwesomeIcon className="ms-2" icon={faSignal} size="1x" /></button>
+                                    </Link>
                                     </Col>
                                 </Row>
                             </Form>

@@ -18,7 +18,8 @@ import { setColumns } from "../../state/columnCards/action";
 import { getTeamById, getUsersByTeamId } from "../../api/teams";
 import { Team } from "../CreateScrumTableComponent/constants";
 import { User } from "../TeamsWithUsersComponent/constants";
-import { truncate } from "fs";
+import { faComments, faInfoCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const DefaultScrumBoardComponent = () =>{
     const scrumBoard = useSelector<IState, IBoard>((state) => state.board);
@@ -55,8 +56,8 @@ const DefaultScrumBoardComponent = () =>{
     const refOutSide = useRef(false);
 
     useEffect(() => {
-        getColumnsAndCards();
         setClose(false);
+        getColumnsAndCards();
     }, [close])
 
 
@@ -106,14 +107,20 @@ const DefaultScrumBoardComponent = () =>{
                 refOutSide.current = true;
                 event.currentTarget.innerHTML += event.dataTransfer.getData("text/html");
 
+                console.log(event);
                 //@ts-ignore
                 let childNodes = event.nativeEvent.path[event.nativeEvent.path.length - 9].childNodes;
                 for(let i = 0; i < childNodes.length; i++) {
-                    if(i > 1) {
-                        let cardId = childNodes[i].attributes[0].value;
-                        childNodes[i].attributes[1].value = columnId;
+                    if(i == 3) {
+                        if(childNodes[i].id === "deleteColumn") {
+                            childNodes[i].childNodes[0].addEventListener('click', () => deleteColumnButtonClicked(columnId));
+                        }
+                    }
+                    if(i > 3) {
+                        let cardId = childNodes[i].attributes[1].value;
+                        childNodes[i].attributes[2].value = columnId;
                         childNodes[i].addEventListener('dragstart', (e: React.DragEvent<HTMLElement>) => dragStartHandler(e, cardId, columnId));
-                        childNodes[i].addEventListener('dragend', (e: React.DragEvent<HTMLElement>) => dragEndHandler(e, columnId))
+                        childNodes[i].addEventListener('dragend', (e: React.DragEvent<HTMLElement>) => dragEndHandler(e, columnId));
                     }
                 }
 
@@ -122,6 +129,30 @@ const DefaultScrumBoardComponent = () =>{
                     await editCard(response.id, response.title, response.description, response.userEmail, columnId, response.statusId, response.createdDate, response.updatedStatusDoneDate, response.deadlineDate, response.priority, response.estimate, response.attachment);
                     refCardId.current = "";
                     refOld.current = "";
+
+                    //@ts-ignore
+                    let childNodes = event.nativeEvent.path[event.nativeEvent.path.length - 9].childNodes;
+                    for(let i = 0; i < childNodes.length; i++) {
+                        if(childNodes[i].id === "card") {
+                            if(childNodes[i].childNodes[0].id === "card-body") {
+                                let num = childNodes[i].children[0].childNodes.length;
+                                let child = childNodes[i].childNodes[0].childNodes;
+                                let card = await getCardById(response.id);
+                                
+                                for(let i=num-1; i>num-4; i--) {
+                                    if(child[i].id === "card-body-button-details") {
+                                        child[i].addEventListener('click', () => handleShowDetails(card));
+                                    }
+                                    else if(child[i].id === "card-body-button-delete") {
+                                        child[i].addEventListener('click', () => deleteThisCard(card));
+                                    }
+                                    else if(child[i].id === "card-body-button-comment") {
+                                        child[i].addEventListener('click', () => handleShowComments(card));
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -139,71 +170,78 @@ const DefaultScrumBoardComponent = () =>{
     }
 
     const submitCloseDetails = () => {
+        setColumnsWithCards([]); 
         setClose(true);
         handleCloseDetails();
     }
     const submitCloseComments = () => {
+        setColumnsWithCards([]); 
         setClose(true);
         handleCloseComments();
     }
 
     const deleteThisCard = (card: any) => {
+        setColumnsWithCards([]); 
         setClose(true);
         deleteCard(card.id);
     }
 
     const deleteColumnButtonClicked = (columnId: string) => {
+        setColumnsWithCards([]); 
+        setClose(true);
         setModalShow(true);
         setColumnToDelete(columnId);
     }
 
     return (
+
             <Container> 
-                    <h3>Tablica {scrumBoard.name}</h3>
+                    <h3>Tablica {scrumBoard.name} </h3>
+                    <h6>Zespół <b>{team?.name}:</b> 
+                        {teamUsers?.map((user, index) => 
+                            <>
+                                <span className="user-names"><i key={index}> {user.firstname} {user.lastname}</i></span><span className="comma">,</span>
+                            </>
+                       )}</h6>
+                    
+                    
                 <Row>
                     {columnsWithCards?.sort((a, b) => a.position-b.position)
                     .map((column, index) =>
-                        <Col className="table-column border bg-dark" key={index} data-columnid={column.id} onDragEnter={dragEnterHandler} onDragOver={allowDrop} onDrop={(event) => dropHandler(event, column.id)} draggable={false}>
-                            {column.title}
-
-                            <span className="mt-4 mt-md-0 me-5"><AddNewCardButton route={"/add-new-card"} selectedColumn={column} /></span>
+                        <Col className="table-column border bg-dark position-relative" key={index} data-columnid={column.id} onDragEnter={dragEnterHandler} onDragOver={allowDrop} onDrop={(event) => dropHandler(event, column.id)} draggable={false}>
+                                {column.title}<br/>
+                                <span className="mt-4 mt-md-0 me-5"><AddNewCardButton route={"/add-new-card"} selectedColumn={column} /></span>
+                            <div id="deleteColumn" className="deleteButton bg-dark">
+                                <button className="del-column-button" onClick={() => deleteColumnButtonClicked(column.id)}>
+                                    Usuń kolumnę
+                                </button> 
+                            </div>
                             {column.cards?.sort((a,b) => a.priority-b.priority)
                             .map((card, key) =>
-                            <Card className="column-card" key={key} data-cardid={card.id} data-columnid={card.columnId} onDragStart={(event) => dragStartHandler(event, card.id, card.columnId)} onDragEnd={(event) => dragEndHandler(event, column.id)} draggable={true} >
-                            <Card.Body>
-                                <Card.Title>{card.title}</Card.Title>
-                                <Card.Subtitle className="mb-2 text-muted">{card.deadlineDate}</Card.Subtitle>
-                                <Card.Text >{card.userEmail}</Card.Text>
+                            <Card className="column-card" key={key} id="card" data-cardid={card.id} data-columnid={card.columnId} onDragStart={(event) => dragStartHandler(event, card.id, card.columnId)} onDragEnd={(event) => dragEndHandler(event, column.id)} draggable={true}>
+                            <Card.Body id="card-body">
+                                <Card.Title><b>{card.title}</b></Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">Termin: {card.deadlineDate}</Card.Subtitle>
+                                <Card.Text>Effort: {card.estimate}</Card.Text>
                                 <Card.Text>
-                                    {card.description}
+                                    {card.userEmail}
                                 </Card.Text>
-                                <Button variant="primary" onClick={() => handleShowDetails(card)}>
-                                    Szczegóły
+                                <Button className="card-button" title="Zobacz szczegóły" id="card-body-button-details" onClick={() => handleShowDetails(card)}>
+                                    <FontAwesomeIcon className="font-aw" icon={faInfoCircle} size="2x" />
                                 </Button>
-                                <Button variant="danger" onClick={() => deleteThisCard(card)}>
-                                    Usuń
-                                </Button>  
-                                <Button variant="primary" onClick={() => handleShowComments(card)}>
-                                    Komentarze
-                                </Button>                              
+                                <Button className="card-button ms-2" title="Komentarze" id="card-body-button-comment" onClick={() => handleShowComments(card)}>
+                                    <FontAwesomeIcon className="font-aw" icon={faComments} size="2x" />
+                                </Button>    
+                                <Button className="ms-2" variant="danger" title="Usuń kartę" id="card-body-button-delete" onClick={() => deleteThisCard(card)}>
+                                    <FontAwesomeIcon className="font-aw" icon={faTrashAlt} size="2x" />
+                                </Button>                        
                             </Card.Body>
                         </Card>
-                            )}
-                            
-                                <Button className="button-delete-col" variant="danger" onClick={() => deleteColumnButtonClicked(column.id)}>
-                                    Usuń kolumnę
-                                </Button> 
-                            
+                            )}    
                         </Col>
-                    )}
-                    <Col sm={2}>
-                       Zespół {team?.name}: <br />
-                       {teamUsers?.map((user, index) => 
-                            <>
-                                <span key={index}>{user.firstname} {user.lastname}</span> <br/>
-                            </>
-                       )}
-                    </Col>      
+                        
+                    )}   
+                        
                 </Row>
 
                 <RemoveColumnModalComponent
@@ -236,7 +274,8 @@ const DefaultScrumBoardComponent = () =>{
                     <Button variant="secondary" onClick={submitCloseComments}>Zamknij</Button>
                     </Modal.Footer>
                 </Modal>
-                <span className="mt-4 mt-md-0 me-5"><AddNewColumnButton route={"/add-new-column"} selectedBoard={scrumBoard} /></span>
+                <Row className="btnbackground bg-dark"><Col></Col></Row>
+                <span className="mt-4 mt-md-0 me-5 add-col-button"><AddNewColumnButton route={"/add-new-column"} selectedBoard={scrumBoard} /></span>
             </Container>
     )
 }

@@ -8,6 +8,7 @@ import { ICard, IState, IBoard } from "../../state";
 import { Comment, Status } from "./constants";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "../AuthComponent/Style.css";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { DateTimePicker } from "@mui/lab";
@@ -149,9 +150,9 @@ const CardDetailsModal = () => {
         </Form.Group>
 
         <br/>
-        <Button variant="primary" type="submit">
+        <button className="nav-button" type="submit">
           Zapisz zmiany
-        </Button>
+        </button>
       </Form>
       )}
       </Formik>

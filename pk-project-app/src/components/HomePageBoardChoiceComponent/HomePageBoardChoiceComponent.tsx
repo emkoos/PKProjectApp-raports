@@ -119,7 +119,7 @@ const HomePageBoardChoiceComponent = () =>{
                                 )}           
                             </Row>
                             <Row>
-                                <Col>
+                                <Col className="ms-5">
                                     <RaportsDoneUserComponent labels={labels} rgbGenerate={rgbGenerate} formatDate={formatDate} />
                                 </Col>
                             </Row>

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { setBoard } from "../../state/boardColumns/action";
 import { setColumns } from "../../state/columnCards/action";
 import { IColumnButtonProps } from "./constants";
+import "../AuthComponent/Style.css";
 
 const AddNewColumnButton= (props: IColumnButtonProps) => {
     const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const AddNewColumnButton= (props: IColumnButtonProps) => {
 
     return (
         <Link to={{pathname: props.route}}>
-            <Button onClick={setSelectedBoard} variant="primary">Dodaj kolumnę</Button>
+            <button className="nav-button add-col-button" onClick={setSelectedBoard} >Dodaj kolumnę</button>
         </Link>
     )
 }

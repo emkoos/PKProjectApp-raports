@@ -77,9 +77,9 @@ const RemoveTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}: a
                                 <Button variant="light" onClick={props.onHide}>
                                     Anuluj
                                 </Button>
-                                <Button variant="danger" onClick={onClickAdd}>
+                                <button className="del-column-button" onClick={onClickAdd}>
                                     Usuń zespół
-                                </Button>
+                                </button>
                              </>
                          )
                      )}

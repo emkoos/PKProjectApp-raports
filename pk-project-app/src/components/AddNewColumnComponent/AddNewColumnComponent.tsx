@@ -6,7 +6,7 @@ import { useNavigate } from "react-router"
 import { createColumn } from "../../api/columns";
 import { IBoard, IState } from "../../state";
 import { IForm } from "./constants";
-
+import "../AuthComponent/Style.css";
 
 const AddNewColumnComponent = () => {
     const navigate = useNavigate();
@@ -43,23 +43,25 @@ const AddNewColumnComponent = () => {
                     enableReinitialize
                 >
                     {({handleSubmit, handleChange, handleBlur, values, touched, errors}) => (
+                        <div className="d-flex justify-content-center profile-form">
                         <Form onSubmit={handleSubmit}>
                             <Row className="mt-3">
-                                <Form.Label className="w-100 text-start px-0">Tytuł</Form.Label>
-                                <Form.Control type="textarea" name="title" className="w-100 text-start px-0 ps-3" onChange={handleChange} />
+                                <Form.Label>Tytuł</Form.Label>
+                                <Form.Control type="textarea" name="title" onChange={handleChange} />
                             </Row>
 
                             <Row className="mt-3">
-                                <Form.Label className="w-100 text-start px-0">Pozycja</Form.Label>
-                                <Form.Control type="number" min="1" name="position" className="w-100 text-start px-0 ps-3" onChange={handleChange} />
+                                <Form.Label>Pozycja</Form.Label>
+                                <Form.Control type="number" min="1" name="position" onChange={handleChange} />
                             </Row>
 
                             <Row>
                                 <Col className="my-3 d-flex justify-content-center justify-content-md-center align-items-stretch px-0">
-                                    <Button type="submit" className="w-100 px-0">Dodaj nową kolumnę</Button>
+                                    <button type="submit" className="nav-button">Dodaj nową kolumnę</button>
                                 </Col>
                             </Row>
                         </Form>
+                        </div>
                     )}
                 </Formik>
             </>

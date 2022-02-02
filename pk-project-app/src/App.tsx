@@ -23,6 +23,7 @@ import LoginComponent from './components/AuthComponent/LoginComponent';
 import DefaultOwnBoardComponent from './components/DefaultOwnBoardComponent/DefaultOwnBoardComponent';
 import CreateOwnTableComponent from './components/CreateOwnTableComponent/CreateOwnTableComponent';
 import FileUploader from './components/FileUploadComponent/FileUploadComponent';
+import FooterComponent from './components/HomePageBoardChoiceComponent/FooterComponent';
 
 function App() {
 
@@ -58,6 +59,7 @@ function App() {
         <Route path="/file" element={<FileUploader/>}/>
         
         </Routes>
+        <FooterComponent />
       </BrowserRouter>
     </div>
   );

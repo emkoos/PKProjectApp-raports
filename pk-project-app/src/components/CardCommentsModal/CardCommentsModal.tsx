@@ -6,6 +6,7 @@ import { ICard, IState, IUser } from "../../state";
 import { Comment } from "./constants";
 import "react-datepicker/dist/react-datepicker.css";
 import { createComment, getCommentByCardId } from "../../api/comments";
+import "../AuthComponent/Style.css";
 
 const CardCommentsModal = () => {
     const userInfo = useSelector<IState, IUser>((state) => state.userInfo);
@@ -55,9 +56,10 @@ const CardCommentsModal = () => {
                     onChange={handleChange}
                   />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <br/>
+        <button className="nav-button ms-0" type="submit">
           Dodaj komentarz
-        </Button>
+        </button>
       </Form>
       )}
       </Formik>

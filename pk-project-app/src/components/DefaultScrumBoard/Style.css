@@ -2,7 +2,10 @@
     position: relative !important;
     color: white !important;
     min-height: 600px;
+    text-align: center;
+    justify-content: center;
 }
+
 .column-card {
     width: '18rem';
     color: black;
@@ -11,3 +14,97 @@
     position: absolute !important;
     bottom: 0 !important;
 }
+
+.deleteButton {
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 200px;
+    height: 200px;
+    width: 100%;
+}
+
+.btnbackground {
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.btnbackground:last-child {
+    display: none;
+    background-color: white;
+}
+
+.comma:last-child{
+    display: none;
+}
+
+.user-names:nth-child(even){
+    color: steelblue;
+    font-weight: bold;
+}
+
+.font-aw{
+    font-size: 1.5rem;
+}
+
+.card-button{
+    background-color: #0A66C2 !important;
+    border-color: #0A66C2 !important;
+}
+
+.card-button:hover{
+    background-color: #16437E !important;
+    border-color: #16437E !important;
+}
+
+.del-column-button {
+    margin-left: 10px;
+    align-items: center;
+    background-color: #dc3545;
+    border: 0;
+    border-radius: 100px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 16px;
+    font-weight: 400;
+    justify-content: center;
+    line-height: 20px;
+    max-width: 480px;
+    min-height: 40px;
+    min-width: 0px;
+    overflow: hidden;
+    padding: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+  }
+  
+.del-column-button:hover,
+.del-column-button:focus { 
+    background-color: #87232d;
+    color: #ffffff;
+  }
+  
+.del-column-button:active {
+    background: #09223b;
+    color: rgb(255, 255, 255, .7);
+  }
+  
+.del-column-button:disabled { 
+    cursor: not-allowed;
+    background: rgba(0, 0, 0, .08);
+    color: rgba(0, 0, 0, .3);
+  }
+
+  @media only screen and (max-width: 400px) {
+    .add-col-button{
+        margin-left: 12% !important;
+    }
+  }

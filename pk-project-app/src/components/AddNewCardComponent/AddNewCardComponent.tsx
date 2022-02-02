@@ -10,6 +10,8 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { DateTimePicker } from "@mui/lab";
 import { TextField } from "@mui/material";
+import "../AuthComponent/Style.css";
+
 
 const AddNewCardComponent = () => {
     const navigate = useNavigate();
@@ -59,17 +61,18 @@ const AddNewCardComponent = () => {
                     enableReinitialize
                 >
                     {({handleSubmit, handleChange, handleBlur, values, touched, errors}) => (
-                        <Form onSubmit={handleSubmit}>
+                        <div className="d-flex justify-content-center profile-form">
+                        <Form className="w-25" onSubmit={handleSubmit}>
                             <Row className="mt-3">
-                                <Form.Label className="w-100 text-start px-0">Tytuł</Form.Label>
-                                <Form.Control type="textarea" name="title" className="w-100 text-start px-0 ps-3" onChange={handleChange} />
+                                <Form.Label>Tytuł</Form.Label>
+                                <Form.Control type="textarea" name="title" onChange={handleChange} />
                             </Row>
                             <Row className="mt-3">
-                                <Form.Label className="w-100 text-start px-0">Opis</Form.Label>
-                                <Form.Control type="textarea" name="description" className="w-100 text-start px-0 ps-3" onChange={handleChange} />
+                                <Form.Label>Opis</Form.Label>
+                                <Form.Control type="textarea" name="description" onChange={handleChange} />
                             </Row>
                             <br/>
-                            <Row>
+                            <Row className="mt-3">
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DateTimePicker
                                     renderInput={(props) => <TextField {...props} />}
@@ -82,20 +85,21 @@ const AddNewCardComponent = () => {
                                 </LocalizationProvider>
                             </Row>
                             <Row className="mt-3">
-                                <Form.Label className="w-100 text-start px-0">Priorytet</Form.Label>
-                                <Form.Control type="number" min="1" name="priority" className="w-100 text-start px-0 ps-3" onChange={handleChange} />
+                                <Form.Label >Priorytet</Form.Label>
+                                <Form.Control type="number" min="1" name="priority" onChange={handleChange} />
                             </Row>
                             <Row className="mt-3">
-                                <Form.Label className="w-100 text-start px-0">Estymata</Form.Label>
-                                <Form.Control type="number" min="1" name="estimate" className="w-100 text-start px-0 ps-3" onChange={handleChange} />
+                                <Form.Label>Estymata</Form.Label>
+                                <Form.Control type="number" min="1" name="estimate" onChange={handleChange} />
                             </Row>
 
                             <Row>
                                 <Col className="my-3 d-flex justify-content-center justify-content-md-center align-items-stretch px-0">
-                                    <Button type="submit" className="w-100 px-0">Dodaj nową karte</Button>
+                                    <button type="submit" className="nav-button">Dodaj nową karte</button>
                                 </Col>
                             </Row>
                         </Form>
+                        </div>
                     )}
                 </Formik>
             </>

@@ -1,12 +1,25 @@
 .board-button{
     display:inline-block !important;
-    background-color:#0dcaf0 !important;
+    background-color:#c9e4f5 !important;
     border: none !important;
     color: black !important;
     margin-top: 10px !important;
 }
 
 .board-button:hover{
-    background-color:#298296 !important;
+    background-color:#0A66C2 !important;
     color: white !important;
+}
+
+.add-card-button{
+    background-color: #212529 !important;
+    color: white !important;
+    border: none !important;
+    margin-left: 17%;
+}
+
+.add-card-button:hover{
+    background-color: #212529 !important;
+    color: #0A66C2 !important;
+    border: none !important;
 }
