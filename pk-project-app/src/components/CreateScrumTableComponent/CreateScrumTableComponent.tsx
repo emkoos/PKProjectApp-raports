@@ -11,7 +11,7 @@ import { IColumn, ILoggedIn, IState, IToken } from "../../state";
 import { setBoard } from "../../state/boardColumns/action";
 import { setColumns } from "../../state/columnCards/action";
 import { Board, IForm, Team } from "./constants";
-
+import "../AuthComponent/Style.css";
 
 const AddNewCardComponent = () => {
     const userToken = useSelector<IState, IToken>((state) => state.token);
@@ -75,14 +75,15 @@ const AddNewCardComponent = () => {
                     enableReinitialize
                 >
                     {({handleSubmit, handleChange, handleBlur, values, touched, errors}) => (
+                        <div className="d-flex justify-content-center profile-form">
                         <Form onSubmit={handleSubmit}>
                             <Form.Group>
-                                <Form.Label className="w-100 text-start px-0">Nazwa tablicy</Form.Label>
+                                <Form.Label>Nazwa tablicy</Form.Label>
                                 <Form.Control type="textarea" name="name" className="w-100 text-start px-0 ps-3" onChange={handleChange} />
                             </Form.Group>
                             
                             <Form.Group>
-                                <Form.Label>Wybierz zespół</Form.Label>
+                                <Form.Label className="mt-3">Wybierz zespół</Form.Label>
                                 <Form.Select name="id" className="select-input" onChange={handleChange}>
                                     <option value="">Wybierz</option>
                                     {teams?.map((team, index) =>
@@ -93,10 +94,11 @@ const AddNewCardComponent = () => {
 
                             <Row>
                                 <Col className="my-3 d-flex justify-content-center justify-content-md-center align-items-stretch px-0">
-                                    <Button type="submit" className="w-100 px-0">Dodaj nową tablicę scrum</Button>
+                                <button type="submit" className="nav-button mt-3">Dodaj nową tablicę Scrum</button>
                                 </Col>
                             </Row>
                         </Form>
+                        </div>
                     )}
                 </Formik>
             </>

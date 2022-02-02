@@ -10,6 +10,7 @@ import { ILoggedIn, IState, IToken } from "../../state";
 import { setBoard } from "../../state/boardColumns/action";
 import { Team } from "../CreateScrumTableComponent/constants";
 import { Board, IForm } from "./constants";
+import "../AuthComponent/Style.css";
 
 const CreateKanbanTableComponent = () => {
     const userToken = useSelector<IState, IToken>((state) => state.token);
@@ -72,14 +73,15 @@ const CreateKanbanTableComponent = () => {
                     enableReinitialize
                 >
                     {({handleSubmit, handleChange, handleBlur, values, touched, errors}) => (
-                        <Form onSubmit={handleSubmit}>
+                        <div className="d-flex justify-content-center profile-form">
+                        <Form className="w-25" onSubmit={handleSubmit}>
                             <Form.Group className="mt-3">
-                                <Form.Label className="w-100 text-start px-0">Nazwa tablicy</Form.Label>
-                                <Form.Control type="textarea" name="name" className="w-100 text-start px-0 ps-3" onChange={handleChange} />
+                                <Form.Label>Nazwa tablicy</Form.Label>
+                                <Form.Control type="textarea" name="name" onChange={handleChange} />
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label>Wybierz zespół</Form.Label>
+                                <Form.Label className="mt-3">Wybierz zespół</Form.Label>
                                 <Form.Select name="id" className="select-input" onChange={handleChange}>
                                     <option value="">Wybierz</option>
                                     {teams?.map((team, index) =>
@@ -90,10 +92,11 @@ const CreateKanbanTableComponent = () => {
 
                             <Row>
                                 <Col className="my-3 d-flex justify-content-center justify-content-md-center align-items-stretch px-0">
-                                    <Button type="submit" className="w-100 px-0">Dodaj nową tablicę Kanban</Button>
+                                    <button type="submit" className="nav-button mt-3">Dodaj nową tablicę Kanban</button>
                                 </Col>
                             </Row>
                         </Form>
+                        </div>
                     )}
                 </Formik>
             </>

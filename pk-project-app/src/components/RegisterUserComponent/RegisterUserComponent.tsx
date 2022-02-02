@@ -15,6 +15,7 @@ import { getCommentByCardId } from "../../api/comments";
 import { Team } from "../CreateScrumTableComponent/constants";
 import { registerUser } from "../../api/auth";
 import { useNavigate } from "react-router";
+import "../AuthComponent/Style.css";
 import FileUploader from "../FileUploadComponent/FileUploadComponent";
 
 const RegisterUserComponent = () => {
@@ -30,12 +31,16 @@ const RegisterUserComponent = () => {
     }
 
     return (
+      <>
+      <h1 className="fs-3 fw-bold d-flex justify-content-center">Rejestracja</h1>
+      <h3 className="fs-6 fw-light m-0 d-flex justify-content-center">Uzupełnij formularz</h3>
       <Formik 
         onSubmit={submitHandler}
         initialValues={initialValues}
         enableReinitialize>
       {({ handleSubmit, handleChange, handleBlur, values, touched, errors}) => (
-        <Form onSubmit={handleSubmit}>
+        <div className="d-flex justify-content-center profile-form">
+        <Form className="w-25" onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Imię</Form.Label>
           <Form.Control
@@ -73,12 +78,14 @@ const RegisterUserComponent = () => {
         </Form.Group>
 
         <br/>
-        <Button variant="primary" type="submit">
+        <button className="nav-button" type="submit">
           Zarejestruj
-        </Button>
+        </button>
       </Form>
+      </div>
       )}
       </Formik>
+      </>
     );
   };
 

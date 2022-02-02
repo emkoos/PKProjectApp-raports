@@ -7,6 +7,7 @@ import { loginUser, infoUser } from "../../api/auth";
 import { ILoginUser } from "./constants";
 import { setToken } from "../../state/userToken/action";
 import { IToken } from "../../state";
+import "../AuthComponent/Style.css";
 import { setUserInfo } from "../../state/userInfo/action";
 import { setLoggedIn } from "../../state/loggedIn/action";
 
@@ -52,7 +53,8 @@ const AuthComponent = () => {
     return (
         <Container>
             <>
-                <h1 className="fs-3 fw-bold d-flex justify-content-center">Zaloguj się</h1>
+                <h1 className="fs-3 fw-bold d-flex justify-content-center">Logowanie</h1>
+                <h3 className="fs-6 fw-light m-0 d-flex justify-content-center">Uzupełnij formularz</h3>
                 {isError && <h3 className="fs-6 fw-light m-0 d-flex justify-content-center">Blędne dane logowania. Spróbuj ponownie</h3>}
                 
                 <Formik
@@ -61,23 +63,25 @@ const AuthComponent = () => {
                     enableReinitialize
                 >
                     {({handleSubmit, handleChange, handleBlur, values, touched, errors}) => (
+                        <div className="d-flex justify-content-center profile-form">
                         <Form onSubmit={handleSubmit}>
                             <Row className="mt-3">
-                                <Form.Label className="w-100 text-start px-0">Email</Form.Label>
-                                <Form.Control type="email" name="email" className="w-100 text-start px-0 ps-3" onChange={handleChange} />
+                                <Form.Label >Email</Form.Label>
+                                <Form.Control type="email" name="email"  onChange={handleChange} />
                             </Row>
 
                             <Row className="mt-3">
-                                <Form.Label className="w-100 text-start px-0">Hasło</Form.Label>
-                                <Form.Control type="password" name="password" className="w-100 text-start px-0 ps-3" onChange={handleChange} />
+                                <Form.Label >Hasło</Form.Label>
+                                <Form.Control type="password" name="password"  onChange={handleChange} />
                             </Row>
 
                             <Row>
                                 <Col className="my-3 d-flex justify-content-center justify-content-md-center align-items-stretch px-0">
-                                    <Button type="submit" className="w-100 px-0">Zaloguj się</Button>
+                                    <button type="submit" className="nav-button">Zaloguj się</button>
                                 </Col>
                             </Row>
                         </Form>
+                        </div>
                     )}
                 </Formik>
             </>

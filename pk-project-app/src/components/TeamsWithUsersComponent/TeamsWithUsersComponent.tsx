@@ -4,6 +4,7 @@ import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./Style.css";
+import "../AuthComponent/Style.css";
 import { createTeam, getUsersByTeamId, getUserTeams } from "../../api/teams";
 import { IState, IUser } from "../../state";
 import AddUserToTeamModalComponent from "./AddUserToTeamModalComponent";
@@ -118,7 +119,7 @@ const TeamsWithUsersComponent = () => {
                                 )}
                                 <Row>
                                     <Col className="my-3 d-flex justify-content-center justify-content-md-center align-items-stretch px-0">
-                                        <Button type="submit">Utwórz zespół <FontAwesomeIcon icon={faUserFriends} size="1x" /></Button>
+                                        <button className="nav-button" type="submit">Utwórz zespół <FontAwesomeIcon className="ms-2" icon={faUserFriends} size="1x" /></button>
                                     </Col>
                                 </Row>
                             </Form>
