@@ -195,7 +195,15 @@ const DefaultScrumBoardComponent = () =>{
                                 </Button> 
                             
                         </Col>
-                    )}       
+                    )}
+                    <Col sm={2}>
+                       Zespół {team?.name}: <br />
+                       {teamUsers?.map((user, index) => 
+                            <>
+                                <span key={index}>{user.firstname} {user.lastname}</span> <br/>
+                            </>
+                       )}
+                    </Col>      
                 </Row>
 
                 <RemoveColumnModalComponent

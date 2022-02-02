@@ -4,15 +4,20 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap"
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router"
 import { createCard } from "../../api/cards";
-import { IBoard, IColumn, IState } from "../../state";
+import { IBoard, IColumn, IState, IUser } from "../../state";
 import { IForm } from "./constants";
-
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { DateTimePicker } from "@mui/lab";
+import { TextField } from "@mui/material";
 
 const AddNewCardComponent = () => {
     const navigate = useNavigate();
     const [columnId, setColumnId] = useState<string>();
+    const [date, setDate] = useState<Date | null | undefined>();
     const column = useSelector<IState, IColumn>((state) => state.column);
     const board = useSelector<IState, IBoard>((state) => state.board);
+    const userInfo = useSelector<IState, IUser>((state) => state.userInfo);
     const defaultStatusId = "15198a05-2a67-41a0-b4e4-729a07a2c608";
 
     const [initialValues, setInitialValues] = useState<IForm>({
@@ -24,9 +29,18 @@ const AddNewCardComponent = () => {
     }, [])
 
     const submitHandler = (values: any, handlers: any) => {
-        
+        let month: any =(date) ? date.getMonth() + 1 : undefined;
+        let day: any = (date) ?  date.getDate() : undefined;
+        let hour: any = (date) ? date.getHours() - 1 : undefined;
+        let minutes: any = (date) ? date.getMinutes() : undefined;
 
-        createCard(values.title, values.description, values.email, columnId, defaultStatusId, "2022-01-08T20:10:32.781Z", values.priority, values.estimate, "")
+        let formattedMonth = `${month < 10 ? `0${month}` : month}`;
+        let formattedDay = `${day < 10 ? `0${day}` :  day}`;
+        let formattedHour = `${hour < 10 ? `0${hour}` : hour}`;
+        let formattedMinutes = `${minutes < 10 ? `0${minutes}` :  minutes}`;
+        let dateString: any = (date) ? date.getFullYear().toString() + '-' + formattedMonth + '-' + formattedDay + 'T' + formattedHour + ':' + formattedMinutes + ':00.064Z'  : undefined;
+
+        createCard(values.title, values.description, userInfo.email, columnId, defaultStatusId, dateString, values.priority, values.estimate, "")
             .then(() => {
                 navigate(`/table-${board.boardTypeId}`);
             }).catch(error => {
@@ -54,11 +68,19 @@ const AddNewCardComponent = () => {
                                 <Form.Label className="w-100 text-start px-0">Opis</Form.Label>
                                 <Form.Control type="textarea" name="description" className="w-100 text-start px-0 ps-3" onChange={handleChange} />
                             </Row>
-                            <Row className="mt-3">
-                                <Form.Label className="w-100 text-start px-0">Email</Form.Label>
-                                <Form.Control type="textarea" name="email" className="w-100 text-start px-0 ps-3" onChange={handleChange} />
+                            <br/>
+                            <Row>
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <DateTimePicker
+                                    renderInput={(props) => <TextField {...props} />}
+                                    label="Termin"
+                                    value={date}
+                                    onChange={(date) => {
+                                        setDate(date);
+                                    }}
+                                    />
+                                </LocalizationProvider>
                             </Row>
-
                             <Row className="mt-3">
                                 <Form.Label className="w-100 text-start px-0">Priorytet</Form.Label>
                                 <Form.Control type="number" min="1" name="priority" className="w-100 text-start px-0 ps-3" onChange={handleChange} />
