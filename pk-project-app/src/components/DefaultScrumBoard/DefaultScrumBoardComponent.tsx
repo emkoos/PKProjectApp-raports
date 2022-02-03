@@ -20,6 +20,7 @@ import { Team } from "../CreateScrumTableComponent/constants";
 import { User } from "../TeamsWithUsersComponent/constants";
 import { faComments, faInfoCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import RemoveBoardModalComponent from "../RemoveBoardModalComponent/RemoveBoardModalComponent";
 
 const DefaultScrumBoardComponent = () =>{
     const scrumBoard = useSelector<IState, IBoard>((state) => state.board);
@@ -33,6 +34,8 @@ const DefaultScrumBoardComponent = () =>{
     const [showComments, setShowComments] = useState(false);
     const [close, setClose] = useState(false);
     const [modalShow, setModalShow] = useState(false);
+    const [isRefresh, setIsRefresh] = useState(false);
+    const [removeModalShow, setRemoveModalShow] = useState(false);
     const [columnToDelete, setColumnToDelete] = useState<string>('');
 
     const handleShowDetails = async (card: any) => {
@@ -193,10 +196,19 @@ const DefaultScrumBoardComponent = () =>{
         setColumnToDelete(columnId);
     }
 
+    const removeBoard = (boardId: string) => {
+        setRemoveModalShow(true);
+    }
+
     return (
 
             <Container> 
-                <h3>Tablica {scrumBoard.name} </h3>
+                <h3>
+                    Tablica {scrumBoard.name} 
+                    <Button className="icon-button" title="Usuń zespół" onClick={() => removeBoard(scrumBoard.id)}>
+                                    <FontAwesomeIcon icon={faTrashAlt} size="2x" />
+                    </Button> 
+                </h3>
                 <h6>Zespół <b>{team?.name}:</b> 
                     {teamUsers?.map((user, index) => 
                         <>
@@ -240,6 +252,14 @@ const DefaultScrumBoardComponent = () =>{
                         </Col>                       
                     )}                 
                 </Row>
+
+                <RemoveBoardModalComponent
+                    setIsRefresh={setIsRefresh}
+                    boardId={scrumBoard.id}
+                    boardName={scrumBoard.name}
+                    show={removeModalShow}
+                    onHide={() => setRemoveModalShow(false)}
+                />
 
                 <RemoveColumnModalComponent
                     setClose={setClose}

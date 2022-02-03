@@ -18,6 +18,7 @@ import { Team } from "../CreateScrumTableComponent/constants";
 import { User } from "../TeamsWithUsersComponent/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle, faComments, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import RemoveBoardModalComponent from "../RemoveBoardModalComponent/RemoveBoardModalComponent";
 
 const DefaultToDoBoardComponent = () =>{
     const toDoBoard = useSelector<IState, IBoard>((state) => state.board);
@@ -32,6 +33,8 @@ const DefaultToDoBoardComponent = () =>{
     const [close, setClose] = useState(false);
     const [modalShow, setModalShow] = useState(false);
     const [columnToDelete, setColumnToDelete] = useState<string>('');
+    const [isRefresh, setIsRefresh] = useState(false);
+    const [removeModalShow, setRemoveModalShow] = useState(false);
 
     const handleShowDetails = async (card: any) => {
         await dispatch(setCard(card));
@@ -191,10 +194,19 @@ const DefaultToDoBoardComponent = () =>{
         setColumnToDelete(columnId);
     }
 
+    const removeBoard = (boardId: string) => {
+        setRemoveModalShow(true);
+    }
+
     return (
         <>
             <Container> 
-                    <h3>Tablica {toDoBoard.name} </h3>
+                    <h3>
+                        Tablica {toDoBoard.name} 
+                        <Button className="icon-button" title="Usuń zespół" onClick={() => removeBoard(toDoBoard.id)}>
+                                        <FontAwesomeIcon icon={faTrashAlt} size="2x" />
+                        </Button> 
+                    </h3>
                     <h6>Zespół <b>{team?.name}:</b> 
                         {teamUsers?.map((user, index) => 
                             <>
@@ -240,6 +252,14 @@ const DefaultToDoBoardComponent = () =>{
                         </Col>
                     )}       
                 </Row>
+
+                <RemoveBoardModalComponent
+                    setIsRefresh={setIsRefresh}
+                    boardId={toDoBoard.id}
+                    boardName={toDoBoard.name}
+                    show={removeModalShow}
+                    onHide={() => setRemoveModalShow(false)}
+                />
 
                 <RemoveColumnModalComponent
                     setClose={setClose}
