@@ -196,16 +196,15 @@ const DefaultScrumBoardComponent = () =>{
     return (
 
             <Container> 
-                    <h3>Tablica {scrumBoard.name} </h3>
-                    <h6>Zespół <b>{team?.name}:</b> 
-                        {teamUsers?.map((user, index) => 
-                            <>
-                                <span className="user-names"><i key={index}> {user.firstname} {user.lastname}</i></span><span className="comma">,</span>
-                            </>
-                       )}</h6>
-                    
-                    
-                <Row>
+                <h3>Tablica {scrumBoard.name} </h3>
+                <h6>Zespół <b>{team?.name}:</b> 
+                    {teamUsers?.map((user, index) => 
+                        <>
+                            <span className="user-names"><i key={index}> {user.firstname} {user.lastname}</i></span><span className="comma">,</span>
+                        </>
+                    )}
+                </h6>
+                 <Row>
                     {columnsWithCards?.sort((a, b) => a.position-b.position)
                     .map((column, index) =>
                         <Col className="table-column border bg-dark position-relative" key={index} data-columnid={column.id} onDragEnter={dragEnterHandler} onDragOver={allowDrop} onDrop={(event) => dropHandler(event, column.id)} draggable={false}>
@@ -238,10 +237,8 @@ const DefaultScrumBoardComponent = () =>{
                             </Card.Body>
                         </Card>
                             )}    
-                        </Col>
-                        
-                    )}   
-                        
+                        </Col>                       
+                    )}                 
                 </Row>
 
                 <RemoveColumnModalComponent
