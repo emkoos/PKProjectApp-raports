@@ -244,14 +244,10 @@ const RaportsComponent = () => {
 
     return (
         <Container className="mt-3">
-            <Row>
-                <Col>
-                    <h3>Wykres effort'ów zadań tablicy Scrum:</h3>
-                </Col>
-            </Row>
+            {/* <Row><Col><h1>Burndown Scrum (Status Done)</h1></Col></Row>
             <Row className="mt-3">
                 <Col>
-                    <Form.Select className='w-50 raport-input' aria-label="Select Teams" onChange={onChangeSelect} value={selectValue}>
+                    <Form.Select aria-label="Select Teams" onChange={onChangeSelect} value={selectValue}>
                         <option value="0" disabled>Wybierz Team</option>
                         {myTeams && myTeams.map((team: any, index) =>
                             <option value={team.id} key={index}>{team.name}</option>
@@ -265,7 +261,7 @@ const RaportsComponent = () => {
                     {loadingRaport === 2 && dataBS !== null && <Line options={options} data={dataBS} />}
                     {loadingRaport === 3 && dataBS === null && <h2>Team nie posiada żadnych tablic</h2>}
                 </Col>
-            </Row>
+            </Row> */}
             <Row className="mt-5 mb-5">
                 <Col>
                     <RaportsDoneComponent labels={labels} rgbGenerate={rgbGenerate} formatDate={formatDate} />

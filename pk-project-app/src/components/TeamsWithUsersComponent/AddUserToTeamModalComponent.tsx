@@ -8,7 +8,6 @@ import "../AuthComponent/Style.css";
 import { deleteColumn } from "../../api/columns";
 
 const AddUserToTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}: any) => {
-    const [turnSpinner, setTurnSpinner] = useState(false);
     const [showError, setShowError] = useState(false);
     const [userEmail, setUserEmail] = useState<string>("");
     const dispatch = useDispatch();
@@ -19,19 +18,16 @@ const AddUserToTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}
 
     const closeWindow = () => {
         props.onHide();
-        setTimeout(function () { setTurnSpinner(false) }, 200);
     }
 
     const onClickAdd = () => {
         setShowError(false);
-        setTurnSpinner(false);
         addUserToTeam(teamId, userEmail)
             .then(() => {
                 setIsRefresh(true);
-                closeWindow()
+                closeWindow();
             })
             .catch(error => {
-                setTurnSpinner(false);
                 setShowError(true);
             });
     };
@@ -79,13 +75,7 @@ const AddUserToTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}
 
                 <Modal.Footer>
                     <>
-                     {turnSpinner ? (
-                         <Spinner
-                            animation="border"
-                            variant="danger"
-                         />
-                     ) : (
-                         !showError && (
+                     {!showError && (
                              <>
                                 <Button variant="light" onClick={props.onHide}>
                                     Anuluj
@@ -93,8 +83,7 @@ const AddUserToTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}
                                 <button className="nav-button" onClick={onClickAdd}>
                                     Dodaj użytkownika
                                 </button>
-                             </>
-                         )
+                            </>
                      )}
                     </>
                 </Modal.Footer>

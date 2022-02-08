@@ -2,7 +2,7 @@ import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { editCard } from "../../api/cards";
+import { editCard, editCardUser } from "../../api/cards";
 import { getStatus, getStatuses } from "../../api/statuses";
 import { ICard, IState, IBoard } from "../../state";
 import { Comment, Status } from "./constants";
@@ -24,6 +24,7 @@ const CardDetailsModal = () => {
     const [comments, setComments] = useState<Comment[] | undefined>();
     const selectedCard = useSelector<IState, ICard>((state) => state.card);
     const cardBoard = useSelector<IState, IBoard>((state) => state.board);
+    const board = useSelector<IState, IBoard>((state) => state.board);
 
     useEffect(() => {
       getStatuses().then((response) => {
@@ -58,10 +59,15 @@ const CardDetailsModal = () => {
       let formattedDay = `${day < 10 ? `0${day}` :  day}`;
       let formattedHour = `${hour < 10 ? `0${hour}` : hour}`;
       let formattedMinutes = `${minutes < 10 ? `0${minutes}` :  minutes}`;
-      console.log(formattedHour);
       let dateString: any = (date) ? date.getFullYear().toString() + '-' + formattedMonth + '-' + formattedDay + 'T' + formattedHour + ':' + formattedMinutes + ':00.064Z'  : undefined;
+      if(board.boardTypeId != "21adbda8-c90d-49dd-9778-e9ab9ac86d46"){
+        values.estimate = 1;
+      }
 
-      console.log(dateString);
+      if(selectedCard.userEmail != values.userEmail){
+        editCardUser(selectedCard.id, values.userEmail);
+      }
+
       editCard(selectedCard.id, values.title, values.description, values.userEmail, selectedCard.columnId, values.statusId, selectedCard.createdDate, selectedCard.updatedStatusDoneDate, dateString, values.priority, values.estimate, "");
     }
 
@@ -130,15 +136,19 @@ const CardDetailsModal = () => {
           />
         </Form.Group>
 
-        <Form.Group>
-          <Form.Label>Effort</Form.Label>
-          <Form.Control
-            type="number"
-            name="estimate"
-            defaultValue={selectedCard.estimate}
-            onChange={handleChange}
-          />
-        </Form.Group>
+        {board.boardTypeId == "21adbda8-c90d-49dd-9778-e9ab9ac86d46" ? (
+          <Form.Group>
+            <Form.Label>Effort</Form.Label>
+            <Form.Control
+              type="number"
+              name="estimate"
+              defaultValue={selectedCard.estimate}
+              onChange={handleChange}
+            />
+          </Form.Group>
+        ) : (
+          <></>
+        )}
 
         <Form.Group>
           <Form.Label>Status</Form.Label>

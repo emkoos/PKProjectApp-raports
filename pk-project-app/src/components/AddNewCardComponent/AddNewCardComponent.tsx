@@ -11,6 +11,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { DateTimePicker } from "@mui/lab";
 import { TextField } from "@mui/material";
 import "../AuthComponent/Style.css";
+import "./Style.css";
 
 
 const AddNewCardComponent = () => {
@@ -42,6 +43,10 @@ const AddNewCardComponent = () => {
         let formattedMinutes = `${minutes < 10 ? `0${minutes}` :  minutes}`;
         let dateString: any = (date) ? date.getFullYear().toString() + '-' + formattedMonth + '-' + formattedDay + 'T' + formattedHour + ':' + formattedMinutes + ':00.064Z'  : undefined;
 
+        if(board.boardTypeId != "21adbda8-c90d-49dd-9778-e9ab9ac86d46"){
+            values.estimate = 1;
+        }
+
         createCard(values.title, values.description, userInfo.email, columnId, defaultStatusId, dateString, values.priority, values.estimate, "")
             .then(() => {
                 navigate(`/table-${board.boardTypeId}`);
@@ -62,7 +67,7 @@ const AddNewCardComponent = () => {
                 >
                     {({handleSubmit, handleChange, handleBlur, values, touched, errors}) => (
                         <div className="d-flex justify-content-center profile-form">
-                        <Form className="w-25" onSubmit={handleSubmit}>
+                        <Form className="w-25 new-card-form" onSubmit={handleSubmit}>
                             <Row className="mt-3">
                                 <Form.Label>Tytuł</Form.Label>
                                 <Form.Control type="textarea" name="title" onChange={handleChange} />
@@ -88,10 +93,15 @@ const AddNewCardComponent = () => {
                                 <Form.Label >Priorytet</Form.Label>
                                 <Form.Control type="number" min="1" name="priority" onChange={handleChange} />
                             </Row>
-                            <Row className="mt-3">
-                                <Form.Label>Estymata</Form.Label>
-                                <Form.Control type="number" min="1" name="estimate" onChange={handleChange} />
-                            </Row>
+                            {board.boardTypeId == "21adbda8-c90d-49dd-9778-e9ab9ac86d46" ? (
+                                <Row className="mt-3">
+                                    <Form.Label>Effort</Form.Label>
+                                    <Form.Control type="number" min="1" name="estimate" onChange={handleChange} />
+                                </Row>
+                            ) : (
+                                <></>
+                            )}
+                            
 
                             <Row>
                                 <Col className="my-3 d-flex justify-content-center justify-content-md-center align-items-stretch px-0">

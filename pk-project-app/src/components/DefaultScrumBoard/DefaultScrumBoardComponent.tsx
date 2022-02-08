@@ -223,13 +223,20 @@ const DefaultScrumBoardComponent = () =>{
                                 {column.title}<br/>
                                 <span className="mt-4 mt-md-0 me-5"><AddNewCardButton route={"/add-new-card"} selectedColumn={column} /></span>
                             <div id="deleteColumn" className="deleteButton bg-dark">
-                                <button className="del-column-button" onClick={() => deleteColumnButtonClicked(column.id)}>
-                                    Usuń kolumnę
-                                </button> 
+                                {index == 0 ? (
+                                    <button className="del-column-button hide-button" onClick={() => deleteColumnButtonClicked(column.id)}>
+                                        Usuń kolumnę
+                                    </button> 
+                                ) : (
+                                    <button className="del-column-button" onClick={() => deleteColumnButtonClicked(column.id)}>
+                                        Usuń kolumnę
+                                    </button> 
+                                )}
+                                
                             </div>
                             {column.cards?.sort((a,b) => a.priority-b.priority)
                             .map((card, key) =>
-                            <Card className="column-card" key={key} id="card" data-cardid={card.id} data-columnid={card.columnId} onDragStart={(event) => dragStartHandler(event, card.id, card.columnId)} onDragEnd={(event) => dragEndHandler(event, column.id)} draggable={true}>
+                            <Card className="column-card mt-1" key={key} id="card" data-cardid={card.id} data-columnid={card.columnId} onDragStart={(event) => dragStartHandler(event, card.id, card.columnId)} onDragEnd={(event) => dragEndHandler(event, column.id)} draggable={true}>
                             <Card.Body id="card-body">
                                 <Card.Title><b>{card.title}</b></Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">Termin: {card.deadlineDate}</Card.Subtitle>

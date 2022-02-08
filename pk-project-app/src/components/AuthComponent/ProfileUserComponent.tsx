@@ -3,10 +3,12 @@ import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {  IState, IUser } from "../../state";
 import { editUserInfo } from "../../api/auth";
+import "./Style.css";
 import "../AuthComponent/Style.css";
 import { Navigate, useNavigate } from "react-router";
 import FileUploader from "../FileUploadComponent/FileUploadComponent";
 import { setUserInfo } from "../../state/userInfo/action";
+
 
 const ProfileUserComponent = () => {
     const navigate = useNavigate();
@@ -18,6 +20,7 @@ const ProfileUserComponent = () => {
       userInfo.firstname = values.firstname;
       userInfo.lastname = values.lastname;
       dispatch(setUserInfo(userInfo));
+      localStorage.setItem("userInfo", JSON.stringify(userInfo))
       navigate(`/`);
     }
 
@@ -31,7 +34,7 @@ const ProfileUserComponent = () => {
         enableReinitialize>
       {({ handleSubmit, handleChange, handleBlur, values, touched, errors}) => (    
         <div className="d-flex justify-content-center profile-form">
-        <Form className="w-25" onSubmit={handleSubmit}>
+        <Form className="profile-container" onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Imię</Form.Label>
           <Form.Control

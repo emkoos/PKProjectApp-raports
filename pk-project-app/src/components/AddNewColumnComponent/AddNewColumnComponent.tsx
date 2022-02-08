@@ -7,6 +7,7 @@ import { createColumn } from "../../api/columns";
 import { IBoard, IState } from "../../state";
 import { IForm } from "./constants";
 import "../AuthComponent/Style.css";
+import "./Style.css";
 
 const AddNewColumnComponent = () => {
     const navigate = useNavigate();

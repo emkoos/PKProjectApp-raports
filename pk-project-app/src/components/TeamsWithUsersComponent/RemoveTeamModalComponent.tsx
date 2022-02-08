@@ -5,7 +5,6 @@ import { Button, Container, Form, Modal, Row, Spinner } from "react-bootstrap";
 import { deleteTeam } from "../../api/teams";
 
 const RemoveTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}: any) => {
-    const [turnSpinner, setTurnSpinner] = useState(false);
     const [showError, setShowError] = useState(false);
 
     useEffect(() => {
@@ -14,19 +13,16 @@ const RemoveTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}: a
 
     const closeWindow = () => {
         props.onHide();
-        setTimeout(function () { setTurnSpinner(false) }, 200);
     }
 
     const onClickAdd = () => {
         setShowError(false);
-        setTurnSpinner(false);
         deleteTeam(teamId)
             .then(() => {
                 setIsRefresh(true);
                 closeWindow()
             })
             .catch(error => {
-                setTurnSpinner(false);
                 setShowError(true);
             });
     };
@@ -66,12 +62,7 @@ const RemoveTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}: a
 
                 <Modal.Footer>
                     <>
-                     {turnSpinner ? (
-                         <Spinner
-                            animation="border"
-                            variant="danger"
-                         />
-                     ) : (
+                     {
                          !showError && (
                              <>
                                 <Button variant="light" onClick={props.onHide}>
@@ -81,7 +72,6 @@ const RemoveTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}: a
                                     Usuń zespół
                                 </button>
                              </>
-                         )
                      )}
                     </>
                 </Modal.Footer>

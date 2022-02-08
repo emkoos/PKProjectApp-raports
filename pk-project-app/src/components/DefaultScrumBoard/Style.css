@@ -103,8 +103,16 @@
     color: rgba(0, 0, 0, .3);
   }
 
-  @media only screen and (max-width: 400px) {
+.add-col-button{
+    margin-left: 2.5% !important;
+}
+
+@media only screen and (max-width: 400px) {
     .add-col-button{
         margin-left: 12% !important;
     }
+}
+
+  .hide-button{
+      display: none;
   }

@@ -21,9 +21,9 @@ const CardCommentsModal = () => {
       }).catch(err => console.log(err))
     }, [commentAdded])
 
-    const submitHandler = (values: any, handlers: any) => {
-        createComment(userInfo.email, selectedCard.id, values.comment);
-        setCommentAdded(true);
+    const submitHandler = async (values: any, handlers: any) => {
+        await createComment(userInfo.email, selectedCard.id, values.comment);
+        await setCommentAdded(true);
     }
 
 
@@ -38,12 +38,15 @@ const CardCommentsModal = () => {
                   <Form.Label>Komentarze:</Form.Label>
                   <div>
                     <hr/>
-                  {comments?.map((comment, index) =>
-                    <div>
-                      <p><b>{comment.content} </b> - {comment.userEmail} - {comment.date}</p>
-                      <hr/>
-                    </div>
-                    )}
+                  {comments?.sort((a,b) => {
+                      return new Date(a.date).getTime() - 
+                          new Date(b.date).getTime()
+                  }).map((comment, index) =>
+                      <div>
+                        <p><b>{comment.content} </b> - {comment.userEmail} - {comment.date}</p>
+                        <hr/>
+                      </div>
+                  )}
                   </div>  
         </Form.Group>
         <br/>

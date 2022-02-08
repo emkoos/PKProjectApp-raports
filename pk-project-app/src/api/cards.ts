@@ -37,6 +37,14 @@ export const editCard = (Id: string, title: string, description: string, userEma
     return instance.put("Cards/edit", params, config);
 }
 
+export const editCardUser = (cardId: string, userEmail: string) => {
+    const params = { cardId, userEmail };
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    }
+    return instance.put("Cards/edit-user", params, config);
+}
+
 export const deleteCard = (Id: string) => {
     const config = {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }

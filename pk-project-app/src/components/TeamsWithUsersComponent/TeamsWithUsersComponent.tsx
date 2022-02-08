@@ -38,15 +38,18 @@ const TeamsWithUsersComponent = () => {
     const getTeamsAndUsers = async () => {
         const teamsResult = await getUserTeams();
         setTeams(teamsResult);
-        const values = await Promise.all<Team>(teamsResult?.map(async (result: any) => {
-            const response = await getUsersByTeamId(result.id);
-
-            return {
-                ...result,
-                users: response
-            }
-        }));
-        setTeamsWithUsers(values); 
+        if(teamsResult){
+            const values = await Promise.all<Team>(teamsResult?.map(async (result: any) => {
+                const response = await getUsersByTeamId(result.id);
+    
+                return {
+                    ...result,
+                    users: response
+                }
+            }));
+            setTeamsWithUsers(values); 
+        }
+        
     }
 
     const submitHandler = (values: any, handlers: any) => {

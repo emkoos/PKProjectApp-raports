@@ -1,0 +1,6 @@
+
+@media only screen and (max-width: 400px) {
+    .new-card-form{
+        width: 75% !important;
+    }
+  }

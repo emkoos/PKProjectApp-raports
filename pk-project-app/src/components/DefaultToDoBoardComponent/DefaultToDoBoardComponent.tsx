@@ -221,9 +221,15 @@ const DefaultToDoBoardComponent = () =>{
                             {column.title}<br/>
                                 <span className="mt-4 mt-md-0 me-5"><AddNewCardButton route={"/add-new-card"} selectedColumn={column} /></span>
                             <div id="deleteColumn" className="deleteButton bg-dark">
-                                <button className="del-column-button" onClick={() => deleteColumnButtonClicked(column.id)}>
-                                    Usuń kolumnę
-                                </button> 
+                                {index == 0 ? (
+                                    <button className="del-column-button hide-button" onClick={() => deleteColumnButtonClicked(column.id)}>
+                                        Usuń kolumnę
+                                    </button> 
+                                ) : (
+                                    <button className="del-column-button" onClick={() => deleteColumnButtonClicked(column.id)}>
+                                        Usuń kolumnę
+                                    </button> 
+                                )}
                             </div>
                             {column.cards?.sort((a,b) => a.priority-b.priority)
                             .map((card, key) =>

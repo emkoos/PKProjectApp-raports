@@ -7,7 +7,7 @@ const FooterComponent = () => {
     return (
         <Container className="page-footer font-small blue pt-4 foot">
         
-            <div className="footer-copyright text-center py-3">© 2020 Copyright:
+            <div className="footer-copyright text-center py-3">© 2022 Copyright:
                 <a href="/"> Emil Saracyn Praca Dyplomowa</a>
             </div>
 

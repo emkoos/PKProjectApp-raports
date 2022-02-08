@@ -50,3 +50,13 @@
   .foot{
       margin-top: 10%;
   }
+
+.raport-col{
+    margin-left: 3rem !important;
+}
+
+@media only screen and (max-width: 800px) {
+    .raport-col{
+        margin-left: 0 !important;
+    }
+  }

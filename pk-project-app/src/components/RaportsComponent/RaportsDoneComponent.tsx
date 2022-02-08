@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import "./Style.css";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -65,14 +64,14 @@ const RaportsDoneComponent = (props:any) => {
                 data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                 backgroundColor: 'rgba(' + props.rgbGenerate() + ', 0.5)',
             }];
-            // datasets = Promise.resolve([
-            //     ...datasets,
-            //     {
-            //         label: 'InProgress',
-            //         data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            //         backgroundColor: 'rgba(' + props.rgbGenerate() + ', 0.5)',
-            //     }
-            // ]);
+            datasets = Promise.resolve([
+                ...datasets,
+                {
+                    label: 'InProgress',
+                    data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                    backgroundColor: 'rgba(' + props.rgbGenerate() + ', 0.5)',
+                }
+            ]);
         }
 
         let columns = await getColumnByBoardId(e.target.value);
@@ -149,14 +148,14 @@ const RaportsDoneComponent = (props:any) => {
     }
 
     return <>
-        <Row className="mt-5">
-            <Col>
+        <Row>
+        <Col>
                 <h3>Liczba zadań ukończonych na tablicy:</h3>
             </Col>
         </Row>
         <Row className="mt-3">
             <Col>
-                <Form.Select className="w-50 raport-input" aria-label="Select Teams" onChange={onChangeSelect} value={selectValue}>
+                <Form.Select aria-label="Select Teams" onChange={onChangeSelect} value={selectValue}>
                     <option value="0" disabled>Wybierz Tablice</option>
                     {myBoards.map((boards:any, index:number) => <option key={index} value={boards.id}>{boards.name}</option>)}
                 </Form.Select>
