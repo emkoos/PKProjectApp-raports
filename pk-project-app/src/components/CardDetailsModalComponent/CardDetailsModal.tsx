@@ -39,7 +39,8 @@ const CardDetailsModal = () => {
     }, [])
 
     useEffect(() => {
-      var selectedDate = new Date(selectedCard.deadlineDate); 
+      var selectedDate = new Date(selectedCard.deadlineDate);
+      selectedDate.setHours(selectedDate.getHours() - 1);
       setDate(selectedDate);
     }, [])
 

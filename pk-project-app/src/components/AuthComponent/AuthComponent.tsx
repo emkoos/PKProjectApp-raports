@@ -8,6 +8,7 @@ import { ILoginUser } from "./constants";
 import { setToken } from "../../state/userToken/action";
 import { IToken } from "../../state";
 import "../AuthComponent/Style.css";
+import "./Style.css";
 import { setUserInfo } from "../../state/userInfo/action";
 import { setLoggedIn } from "../../state/loggedIn/action";
 
@@ -55,7 +56,7 @@ const AuthComponent = () => {
             <>
                 <h1 className="fs-3 fw-bold d-flex justify-content-center">Logowanie</h1>
                 <h3 className="fs-6 fw-light m-0 d-flex justify-content-center">Uzupełnij formularz</h3>
-                {isError && <h3 className="fs-6 fw-light m-0 d-flex justify-content-center">Blędne dane logowania. Spróbuj ponownie</h3>}
+                {isError && <h3 className="fs-6 fw-light m-0 d-flex justify-content-center error">Blędne dane logowania. Spróbuj ponownie</h3>}
                 
                 <Formik
                     onSubmit={submitHandler}

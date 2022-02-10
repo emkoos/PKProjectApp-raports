@@ -1,17 +1,14 @@
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react"
-import { Button, Container, Form, Modal, Row, Spinner } from "react-bootstrap";
+import { Button, Container, Modal, Row, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { addUserToTeam } from "../../api/auth";
-import "../AuthComponent/Style.css";
+import { deleteCard } from "../../api/cards";
 import { deleteColumn } from "../../api/columns";
 
-const AddUserToTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}: any) => {
+const RemoveCardModalComponent = ({ cardId, cardName,setClose, ...props}: any) => {
+    const [turnSpinner, setTurnSpinner] = useState(false);
     const [showError, setShowError] = useState(false);
-    const [userEmail, setUserEmail] = useState<string>("");
-    const [info, setInfo] = useState<string>("");
-    const dispatch = useDispatch();
 
     useEffect(() => {
         setTimeout(function () { setShowError(false) }, 200);
@@ -19,21 +16,22 @@ const AddUserToTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}
 
     const closeWindow = () => {
         props.onHide();
+        setTimeout(function () { setTurnSpinner(false) }, 200);
     }
 
-    const onClickAdd = () => {
+    const onClickRemove = () => {
         setShowError(false);
-        addUserToTeam(teamId, userEmail)
+        setTurnSpinner(false);
+        deleteCard(cardId)
             .then(() => {
-                setInfo("Pomyślnie przypisano użytkownika.");
-                setIsRefresh(true);
-                closeWindow();
+                setClose(true);
+                closeWindow()
             })
             .catch(error => {
+                setTurnSpinner(false);
                 setShowError(true);
             });
     };
-
 
     return (
         <section className="RemoveColumnModalComponent">
@@ -45,12 +43,7 @@ const AddUserToTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Przypisanie użytkownika do zespołu {teamName}
-                        {/* {info == "" ? (
-                            <p>{info}</p>
-                        ) : (
-                            <></>
-                        )} */}
+                        Usuwanie karty
                     </Modal.Title>   
                 </Modal.Header>
                 <Modal.Body>
@@ -60,37 +53,36 @@ const AddUserToTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}
                                 <FontAwesomeIcon icon={faExclamationCircle} size="5x" />
                             </Row>
                             <Row className="text-center m-auto p-auto">
-                                <p>Użytkownik nie został dodany.</p>
+                                <p>Karta nie została usunięta</p>
                             </Row>
                         </Container>
                         :
                         <>
-                            <Form>
-                                <Form.Group>
-                                        <Form.Label>Wpisz email użytkownika</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="comment"
-                                            placeholder="Email"
-                                            onChange={(event) => setUserEmail(event.target.value)}
-                                        />
-                                </Form.Group>
-                            </Form>
+                            <p className="fs-6 my-auto">
+                                Czy na pewno chcesz usunąć kartę <b>{cardName}</b> ?
+                            </p>
                         </>
                     }
                 </Modal.Body>
 
                 <Modal.Footer>
                     <>
-                     {!showError && (
+                     {turnSpinner ? (
+                         <Spinner
+                            animation="border"
+                            variant="danger"
+                         />
+                     ) : (
+                         !showError && (
                              <>
                                 <Button variant="light" onClick={props.onHide}>
                                     Anuluj
                                 </Button>
-                                <button className="nav-button" onClick={onClickAdd}>
-                                    Dodaj użytkownika
-                                </button>
-                            </>
+                                <Button variant="danger" onClick={onClickRemove}>
+                                    Usuń kartę
+                                </Button>
+                             </>
+                         )
                      )}
                     </>
                 </Modal.Footer>
@@ -99,4 +91,4 @@ const AddUserToTeamModalComponent = ({ teamId, teamName, setIsRefresh, ...props}
     )
 }
 
-export default AddUserToTeamModalComponent;
+export default RemoveCardModalComponent;

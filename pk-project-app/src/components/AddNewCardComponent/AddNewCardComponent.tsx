@@ -29,6 +29,7 @@ const AddNewCardComponent = () => {
 
     useEffect(() => {
         setColumnId(column.id);
+        setDate(new Date("2022-02-26 12:00:00"))
     }, [])
 
     const submitHandler = (values: any, handlers: any) => {
@@ -70,7 +71,7 @@ const AddNewCardComponent = () => {
                         <Form className="w-25 new-card-form" onSubmit={handleSubmit}>
                             <Row className="mt-3">
                                 <Form.Label>Tytuł</Form.Label>
-                                <Form.Control type="textarea" name="title" onChange={handleChange} />
+                                <Form.Control required={true} type="textarea" name="title" onChange={handleChange} />
                             </Row>
                             <Row className="mt-3">
                                 <Form.Label>Opis</Form.Label>

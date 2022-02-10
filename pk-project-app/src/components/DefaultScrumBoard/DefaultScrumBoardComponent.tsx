@@ -21,6 +21,7 @@ import { User } from "../TeamsWithUsersComponent/constants";
 import { faComments, faInfoCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import RemoveBoardModalComponent from "../RemoveBoardModalComponent/RemoveBoardModalComponent";
+import RemoveCardModalComponent from "../RemoveCardModalComponent/RemoveCardModalComponent";
 
 const DefaultScrumBoardComponent = () =>{
     const scrumBoard = useSelector<IState, IBoard>((state) => state.board);
@@ -35,8 +36,12 @@ const DefaultScrumBoardComponent = () =>{
     const [close, setClose] = useState(false);
     const [modalShow, setModalShow] = useState(false);
     const [isRefresh, setIsRefresh] = useState(false);
+    const [isRefresh1, setIsRefresh1] = useState(false);
     const [removeModalShow, setRemoveModalShow] = useState(false);
+    const [removeCardModalShow, setRemoveCardModalShow] = useState(false);
     const [columnToDelete, setColumnToDelete] = useState<string>('');
+    const [cardToDelete, setCardToDelete] = useState<string>('');
+    const [cardToDeleteName, setCardToDeleteName] = useState<string>('');
 
     const handleShowDetails = async (card: any) => {
         await dispatch(setCard(card));
@@ -186,7 +191,9 @@ const DefaultScrumBoardComponent = () =>{
     const deleteThisCard = (card: any) => {
         setColumnsWithCards([]); 
         setClose(true);
-        deleteCard(card.id);
+        setRemoveCardModalShow(true);
+        setCardToDelete(card.id);
+        setCardToDeleteName(card.title);
     }
 
     const deleteColumnButtonClicked = (columnId: string) => {
@@ -273,6 +280,14 @@ const DefaultScrumBoardComponent = () =>{
                     columnId={columnToDelete}
                     show={modalShow}
                     onHide={() => setModalShow(false)}
+                    />
+
+                <RemoveCardModalComponent
+                    setClose={setClose}
+                    cardId={cardToDelete}
+                    cardName={cardToDeleteName}
+                    show={removeCardModalShow}
+                    onHide={() => setRemoveCardModalShow(false)}
                     />
 
                 <Modal show={showDetails} onHide={handleCloseDetails}>
