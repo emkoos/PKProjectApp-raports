@@ -11,6 +11,7 @@ import "../AuthComponent/Style.css";
 import "./Style.css";
 import { setUserInfo } from "../../state/userInfo/action";
 import { setLoggedIn } from "../../state/loggedIn/action";
+import { Link } from "react-router-dom";
 
 
 const AuthComponent = () => {
@@ -80,6 +81,9 @@ const AuthComponent = () => {
                                 <Col className="my-3 d-flex justify-content-center justify-content-md-center align-items-stretch px-0">
                                     <button type="submit" className="nav-button">Zaloguj się</button>
                                 </Col>
+                                <Link className="register-btn" to="/register">
+                                    <button type="submit" className="nav-button">Rejestracja</button>
+                                </Link>
                             </Row>
                         </Form>
                         </div>

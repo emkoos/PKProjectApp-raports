@@ -17,10 +17,13 @@ const HomePageBoardChoiceComponent = () =>{
     const userToken = useSelector<IState, IToken>((state) => state.token);
     const [boardTypes, setBoardTypes] = useState<BoardTypes[]>();
     const [boards, setBoards] = useState<Board[]>();
+    const [info, setInfo] = useState<string | null>('');
     let boardType = "";
 
     useEffect(() => {
         getBoardTypesAndBoards();
+        setInfo(localStorage.getItem("Info"));
+        localStorage.setItem("Info", '');
     }, [])
 
     const getBoardTypesAndBoards = async () => {
@@ -83,6 +86,13 @@ const HomePageBoardChoiceComponent = () =>{
         <>
                 <Row>
                 <Col sm={8}>
+                    {info != '' ? (
+                        <Row className="registerInfo">
+                            <h6>{info}</h6>
+                        </Row>
+                    ) : (
+                        <></>
+                    )}        
                     <Row>
                         <h3>Utwórz nową tablicę:</h3>
                     </Row>

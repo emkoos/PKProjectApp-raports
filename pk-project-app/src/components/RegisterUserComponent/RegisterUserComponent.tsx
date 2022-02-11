@@ -27,6 +27,7 @@ const RegisterUserComponent = () => {
 
     const submitHandler = (values: any, handlers: any) => {
         registerUser(values.userEmail, values.userEmail, values.password, values.firstname, values.lastname, "");
+      localStorage.setItem("Info", "Zarejestrowałeś się poprawnie. Możesz się zalogować.");
       navigate(`/`);
     }
 

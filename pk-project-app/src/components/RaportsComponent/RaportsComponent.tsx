@@ -35,6 +35,13 @@ export const options = {
             position: 'right' as const,
         }
     },
+    scales: {
+        y: {
+            ticks:{
+                stepSize: 1
+            }
+        }
+      }
 };
 
 const RaportsComponent = () => {

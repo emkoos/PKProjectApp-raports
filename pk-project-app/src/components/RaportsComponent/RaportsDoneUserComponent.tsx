@@ -27,11 +27,17 @@ export const options = {
     responsive: true,
     plugins: {
         legend: {
-            position: 'top' as const,
-        },
+            position: 'right' as const,
+        }
     },
+    scales: {
+        y: {
+            ticks:{
+                stepSize: 1
+            }
+        }
+      }
 };
-
 
 const RaportsDoneUserComponent = (props: any) => {
 
@@ -64,14 +70,7 @@ const RaportsDoneUserComponent = (props: any) => {
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: 'rgba(' + props.rgbGenerate() + ', 0.5)',
             }];
-            datasets = Promise.resolve([
-                ...datasets,
-                {
-                    label: 'InProgress',
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    backgroundColor: 'rgba(' + props.rgbGenerate() + ', 0.5)',
-                }
-            ]);
+           
         }
 
         let columns = await getColumnByBoardId(e.target.value);
